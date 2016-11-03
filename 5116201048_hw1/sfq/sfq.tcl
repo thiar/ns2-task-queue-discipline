@@ -24,11 +24,11 @@ for {set i 1} {$i < $num} {incr i} {
 proc finish {} {
         global ns nf tf num tr
 
-
         $ns flush-trace
         #Close the NAM trace file
         close $nf 
         close $tf
+
         for {set i 1} {$i <=$num-1} {incr i} {
         	close $tr($i)
         }
@@ -61,11 +61,11 @@ for {set i 1} {$i <=$num} {incr i} {
 
 	if {$i>1} {
 		set past [expr {$i - 1}]
-		$ns duplex-link $node($past) $node($i) 0.5Mb 100ms DropTail
+		$ns duplex-link $node($past) $node($i) 0.5Mb 100ms SFQ
 		$ns duplex-link-op $node($past) $node($i) orient right
 	}
 	if {$i<$num} {
-		$ns duplex-link $tcp($i) $node($i) 5Mb 20ms DropTail
+		$ns duplex-link $tcp($i) $node($i) 5Mb 20ms SFQ
 		$ns duplex-link-op $tcp($i) $node($i) orient down
 	}
 		
